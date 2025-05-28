@@ -39,5 +39,5 @@ def databox_handler():
     except Exception as e:
         return jsonify({"error": f"Beklenmeyen hata: {str(e)}"}), 500
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000)
+# Flask sunucusunu başlat
+app.run(host='0.0.0.0', port=8000)
