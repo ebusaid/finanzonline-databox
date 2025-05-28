@@ -20,14 +20,16 @@ def databox_handler():
         if not all([tid, benid, pin]):
             return jsonify({"error": "Eksik bilgiler"}), 400
 
-        # 1. Session başlat
+        # 1. Session başlat – HERSTELLERID eklendi
         session_client = Client(wsdl=SESSION_WSDL, transport=Transport(timeout=10))
-        login_response = session_client.service.login(tid, benid, pin)
+        login_response = session_client.service.login(tid, benid, pin, "WS.TST")  # <-- BURASI GÜNCELLENDİ
         session_id = login_response.id
 
         # 2. DataBox verilerini al
         databox_client = Client(wsdl=DATABOX_WSDL, transport=Transport(timeout=10))
-        databox_response = databox_client.service.getDatabox(tid, benid, session_id, '', None, None)
+        databox_response = databox_client.service.getDatabox(
+            tid, benid, session_id, '', None, None
+        )
 
         return jsonify({
             "session_id": session_id,
